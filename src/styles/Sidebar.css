@@ -1,0 +1,19 @@
+/* Menü item hover və seçilmiş halları */
+.ant-menu-inline .ant-menu-item:hover,
+.ant-menu-inline .ant-menu-item-selected {
+    background-color: rgba(130, 71, 229, 1) !important;
+    color: white !important;
+}
+
+.ant-menu-inline .ant-menu-submenu-selected {
+    background-color: rgba(130, 71, 229, 1) !important;
+    color: white !important;
+}
+
+.ant-menu-inline .ant-menu-item:active {
+    background-color: rgba(130, 71, 229, 1) !important;
+    color: white !important;
+}
+.ant-menu-item {
+    padding-left: "100px !important";
+}
