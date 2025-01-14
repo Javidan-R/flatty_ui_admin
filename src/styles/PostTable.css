@@ -1,0 +1,41 @@
+/* src/styles/PostTable.css */
+
+/* Style for selected rows */
+.selected-row {
+  background-color: #f0f0f0 !important;
+}
+
+/* General table styling */
+.ant-table {
+  border: none;
+  border-radius: 4px;
+}
+
+.ant-table-thead > tr > th {
+  background: #fafafa;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.ant-table-tbody > tr > td {
+  border: none;
+}
+
+/* Hover effect for table rows */
+.ant-table-tbody > tr:hover > td {
+  background: #e6f7ff !important;
+}
+
+/* Checkbox styling */
+.ant-checkbox-wrapper {
+  margin-right: 8px;
+}
+
+/* Style for empty state */
+.ant-empty {
+  padding: 20px 0;
+}
+
+/* Alert styling */
+.ant-alert {
+  margin-bottom: 16px;
+}

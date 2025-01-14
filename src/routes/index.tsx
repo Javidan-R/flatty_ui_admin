@@ -6,69 +6,58 @@ import NotFound from "@components/NotFound.tsx";
 import categoryRoutes from "./category.tsx";
 import departmentRoutes from "./department.tsx";
 import vendorRoutes from "./vendor.tsx";
-import productRoutes from "./product.tsx";
-import orderRoutes from "./order.tsx";
-import paymentRoutes from "./payment.tsx";
+import postsRoutes from "./posts.tsx";
 import settingsRoutes from "./settings.tsx";
-import userRoutes from "./users.tsx";
+import agentsRoutes from "./agents.tsx";
 
 const routes: RouteObject[] = [
-	{
-		path: "/",
-		element: <Layout />,
-		children: [
-			{
-				index: true,
-				element: <Dashboard />,
-			},
-			{
-				path: "users",
-				children: userRoutes,
-			},
-			{
-				path: "category",
-				children: categoryRoutes,
-			},
-			{
-				path: "department",
-				children: departmentRoutes,
-			},
-			{
-				path: "product",
-				children: productRoutes,
-			},
-			{
-				path: "order",
-				children: orderRoutes,
-			},
-			{
-				path: "payment",
-				children: paymentRoutes,
-			},
-
-			{
-				path: "vendor",
-				children: vendorRoutes,
-			},
-			{
-				path: "settings",
-				children: settingsRoutes,
-			},
-		],
-	},
-	{
-		path: "auth/*",
-		children: [
-			{
-				path: "login",
-				element: <Login />,
-			},
-		],
-	},
-	{
-		path: "*",
-		element: <NotFound />,
-	},
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      {
+        index: true,
+        element: <Dashboard />,
+      },
+      {
+        path: "agents",
+        children: agentsRoutes,
+      },
+      {
+        path: "category",
+        children: categoryRoutes,
+      },
+      {
+        path: "department",
+        children: departmentRoutes,
+      },
+      {
+        path: "posts",
+        children: postsRoutes,
+      },
+      {
+        path: "vendor",
+        children: vendorRoutes,
+      },
+      {
+        path: "settings",
+        children: settingsRoutes,
+      },
+    ],
+  },
+  {
+    path: "auth/*",
+    children: [
+      {
+        path: "login",
+        element: <Login />,
+      },
+    ],
+  },
+  {
+    path: "*",
+    element: <NotFound />,
+  },
 ];
 
 export default routes;

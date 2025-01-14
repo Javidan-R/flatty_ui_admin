@@ -1,0 +1,19 @@
+/* PostPage.module.css */
+.postManagementContainer {
+  padding: 20px;
+}
+
+.header {
+  margin-bottom: 20px;
+}
+
+.searchAndFilter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.filterButton {
+  margin-left: 10px;
+}

@@ -1,0 +1,83 @@
+/* UserPage.module.css */
+
+/* Container for the entire user management page */
+.userManagementContainer {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Styles for the header */
+.header {
+  margin-bottom: 20px;
+  font-size: 28px; /* Use token.fontSizeHeading1 if you have access to it */
+}
+
+/* Layout for search input and company selector */
+.searchAndSelect {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Search input styling */
+.searchInput {
+  width: 439px;
+  height: 40px;
+  padding: 16px 0 0;
+  border-radius: 3px 0 0 0;
+  border: 1px solid #e2e4e8;
+  border-right: none;
+  background: #ffffff;
+}
+
+/* Search button styling */
+.searchButton {
+  width: 32px;
+  height: 40px;
+  border-radius: 0 3px 3px 0;
+  border: 1px solid #e2e4e8;
+  border-left: none;
+}
+
+/* Search icon styling */
+.searchIcon {
+  width: 15px;
+  height: 15px;
+  border: 1.5px solid #8c93a3;
+}
+
+/* Company selector styling */
+.companySelect {
+  width: 224px;
+  height: 40px;
+  padding: 9px 12px;
+  border-radius: 3px 0 0 0;
+  border: 1px solid #e2e4e8;
+  background: #f5f6f7;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 22.4px;
+  font-family: "General Sans";
+}
+
+/* Options inside the company selector */
+.companyOption {
+  color: #525c76;
+  width: 170px;
+  height: 22px;
+}
+
+/* Container for pagination */
+.paginationContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Pagination component styling */
+.pagination {
+  width: 376px;
+  height: 40px;
+}
