@@ -7,7 +7,7 @@ import {
   Col,
   Upload,
   UploadProps,
-  UploadChangeParam,
+  // UploadChangeParam,
   Select,
   InputNumber,
   Switch,
@@ -70,14 +70,14 @@ const FilterModal: React.FC<FilterModalProps> = ({
     }));
   };
 
-  const handleUpload = (file: File | Blob | undefined) => {
-    if (file instanceof File) {
-      setFilters((prevFilters) => ({
-        ...prevFilters,
-        photos: [...prevFilters.photos, file],
-      }));
-    }
-  };
+  // const handleUpload = (file: File | Blob | undefined) => {
+  //   if (file instanceof File) {
+  //     setFilters((prevFilters) => ({
+  //       ...prevFilters,
+  //       photos: [...prevFilters.photos, file],
+  //     }));
+  //   }
+  // };
 
   const uploadProps: UploadProps = {
     customRequest: (options: any) => {
@@ -86,11 +86,11 @@ const FilterModal: React.FC<FilterModalProps> = ({
         if (onSuccess) onSuccess("ok");
       }, 0);
     },
-    onChange(info: UploadChangeParam) {
-      if (info.file.status !== "uploading") {
-        handleUpload(info.file.originFileObj);
-      }
-    },
+    // onChange(info: UploadChangeParam) {
+    //   if (info.file.status !== "uploading") {
+    //     handleUpload(info.file.originFileObj);
+    //   }
+    // },
   };
 
   const buttonStyle = { margin: "5px" };

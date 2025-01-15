@@ -94,7 +94,7 @@ const PostPage: React.FC = () => {
           showSizeChanger={false}
           showTotal={showTotal}
           style={{ width: "376px", height: "40px" }}
-          itemRender={(page, type, originalElement) => {
+          itemRender={(_page, type, originalElement) => {
             if (type === "prev") {
               return (
                 <a style={{ opacity: currentPage === 1 ? 0.5 : 1 }}>{"<"}</a>

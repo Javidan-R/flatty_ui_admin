@@ -1,5 +1,3 @@
-import React from "react";
-
 export const NotificationTrue = () => {
   return (
     <svg
@@ -27,3 +25,4 @@ export const NotificationTrue = () => {
     </svg>
   );
 };
+export default NotificationTrue;

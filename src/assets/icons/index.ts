@@ -1,45 +1,25 @@
-export { Warning } from "./Warning";
 export { CheckSquareFull } from "./CheckSquareFull";
-export { UserCircle } from "./UserCircle";
 export { CheckSquare } from "./CheckSquare";
-export { XCircle } from "./XCircle";
-export { HouseIcon } from "./HouseIcon";
 export { ArrowDown } from "./ArrowDown";
 export { ArrowLeft } from "./ArrowLeft";
 export { ArrowRight } from "./ArrowRight";
-export { LocationCancel } from "./LocationCancel";
-export { LogoDesktop } from "./LogoDesktop";
 export { MapPin } from "./MapPin";
-export { ShowMap } from "./ShowMap";
-export { SeeAll } from "./SeeAll";
-export { FacebookIcon } from "./FacebookIcon";
-export { TwitterIcon } from "./TwitterIcon";
-export { LinkedinIcon } from "./LinkedinIcon";
-export { YoutubeIcon } from "./YoutubeIcon";
-export { InstagramIcon } from "./InstagramIcon";
-export { HeartFull } from "./HeartFull"; // Dolu ikon əlavə edin
-export { HeartEmpty } from "./HeartEmpty";
 export { FilterButton } from "./FilterButton";
 export { DropdownUnder } from "./DropdownUnder";
 export { CheckboxSquare } from "./CheckboxSquare";
 export { CheckboxFill } from "./CheckboxFill";
 export { Euro } from "./Euro";
-export { Certified } from "./Certified";
 export { Location } from "./Location";
 export { MarkRead } from "./MarkRead";
 export { NotificationTrue } from "./NotificationTrue";
-export { Wishlist } from "./Wishlist";
 export { DeleteNotification } from "./DeleteNotification";
 export { DotsThreeOutline } from "./DotsThreeOutline";
-export { Trash } from "./Trash";
-export { EditPencil } from "./EditPencil";
-export { EditPost } from "./EditPost";
-export { NewPost } from "./NewPost";
-export { SelectedWishlist } from "./SelectedWishlist";
+
 export { Add } from "./Add";
-export { Subtract } from "./Subtract";
 export { ToggleTrue } from "./ToggleTrue";
 export { ToggleFalse } from "./ToggleFalse";
+
+// export {NotificationTrue} from "./NotificationTrue";
 // export {} from "./";
 
 // export { LogoMobile } from "./LogoMobile";

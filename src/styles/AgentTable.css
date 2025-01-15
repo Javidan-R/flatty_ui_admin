@@ -1,302 +1,302 @@
 /* Sütunlar arası çizgiyi kaldır */
 .ant-table-cell {
-    border-right: none !important;
+  border-right: none !important;
 }
 
 /* Tablonun üst ve alt kenar çizgilerini kaldır */
 .ant-table {
-    border: none !important;
+  border: none !important;
 }
 
 /* Aktif Checkbox için satır arka plan rengi */
 .selected-row {
-    background-color: #f0f0f0 !important; /* Gri ton */
+  background-color: #f0f0f0 !important; /* Gri ton */
 }
 
 /* Checkboxın seçili olup olmadığını kontrol et */
 .ant-table-row:hover {
-    background-color: #e6e6e6 !important; /* Hover efekti */
+  background-color: #e6e6e6 !important; /* Hover efekti */
 }
 
 /* Style for the checkbox border color and checked state */
 .ant-checkbox-wrapper {
-    width: 16px;
-    height: 16px; /* Set width and height of the checkbox */
+  width: 16px;
+  height: 16px; /* Set width and height of the checkbox */
 }
 
 .ant-checkbox-wrapper .ant-checkbox-inner {
-    border: 2px solid rgba(100, 51, 196, 1) !important;
-    width: 16px;
-    height: 16px;
+  border: 2px solid rgba(100, 51, 196, 1) !important;
+  width: 16px;
+  height: 16px;
 }
 
 /* Change the color of the checkbox when checked */
 .ant-checkbox-checked .ant-checkbox-inner {
-    background-color: rgba(
-        100,
-        51,
-        196,
-        1
-    ) !important; /* Set background when checked */
-    border-color: rgba(
-        100,
-        51,
-        196,
-        1
-    ) !important; /* Set border color when checked */
+  background-color: rgba(
+    100,
+    51,
+    196,
+    1
+  ) !important; /* Set background when checked */
+  border-color: rgba(
+    100,
+    51,
+    196,
+    1
+  ) !important; /* Set border color when checked */
 }
 
 /* Change the color of the checkbox when hovered */
 .ant-checkbox-wrapper:hover .ant-checkbox-inner {
-    border-color: rgba(
-        100,
-        51,
-        196,
-        1
-    ) !important; /* Set border color on hover */
+  border-color: rgba(
+    100,
+    51,
+    196,
+    1
+  ) !important; /* Set border color on hover */
 }
 
 /* Optional: Add a border color when checkbox is in indeterminate state */
 .ant-checkbox-indeterminate .ant-checkbox-inner {
-    border-color: rgba(
-        100,
-        51,
-        196,
-        1
-    ) !important; /* Set border color for indeterminate state */
-    background-color: transparent !important; /* Make indeterminate state transparent */
+  border-color: rgba(
+    100,
+    51,
+    196,
+    1
+  ) !important; /* Set border color for indeterminate state */
+  background-color: transparent !important; /* Make indeterminate state transparent */
 }
 
 /* Style for the Table */
 .ant-table {
-    width: 100%; /* Ensure the table is fully responsive */
-    margin: 0 auto; /* Center the table horizontally */
-    overflow-x: auto; /* Enable horizontal scroll on smaller screens */
-    table-layout: auto; /* Allow table to adjust to content */
+  width: 100%; /* Ensure the table is fully responsive */
+  margin: 0 auto; /* Center the table horizontally */
+  overflow-x: auto; /* Enable horizontal scroll on smaller screens */
+  table-layout: auto; /* Allow table to adjust to content */
 }
 
 /* Style for table headers */
 .ant-table-thead > tr > th {
-    background-color: none;
-    padding: 12px; /* Adjust padding for better readability */
-    font-size: 14px;
-    text-align: left;
-    white-space: nowrap; /* Prevent text from wrapping */
-    border: none;
+  background-color: none;
+  padding: 12px; /* Adjust padding for better readability */
+  font-size: 14px;
+  text-align: left;
+  white-space: nowrap; /* Prevent text from wrapping */
+  border: none;
 }
 
 /* Style for table rows */
 .ant-table-tbody > tr > td {
-    padding: 10px; /* Adjust padding */
-    font-size: 14px;
-    border: none;
+  padding: 10px; /* Adjust padding */
+  font-size: 14px;
+  border: none;
 }
 
 /* Responsive Design */
 @media (max-width: 1024px) {
-    .ant-table-thead > tr > th,
-    .ant-table-tbody > tr > td {
-        font-size: 13px; /* Adjust font size for tablets */
-        padding: 10px; /* Adjust padding */
-    }
+  .ant-table-thead > tr > th,
+  .ant-table-tbody > tr > td {
+    font-size: 13px; /* Adjust font size for tablets */
+    padding: 10px; /* Adjust padding */
+  }
 
-    /* Stack table elements vertically */
-    .ant-table-thead,
-    .ant-table-tbody {
-        display: block;
-    }
+  /* Stack table elements vertically */
+  .ant-table-thead,
+  .ant-table-tbody {
+    display: block;
+  }
 
-    /* Stack rows for smaller screens */
-    .ant-table-tbody > tr {
-        display: block;
-        margin-bottom: 15px;
-        padding: 10px 0;
-        border-bottom: 1px solid #e8e8e8;
-    }
+  /* Stack rows for smaller screens */
+  .ant-table-tbody > tr {
+    display: block;
+    margin-bottom: 15px;
+    padding: 10px 0;
+    border-bottom: 1px solid #b4abab;
+  }
 
-    .ant-table-tbody > tr > td {
-        display: block;
-        width: 100%;
-        text-align: right;
-        padding: 8px 0;
-    }
+  .ant-table-tbody > tr > td {
+    display: block;
+    width: 100%;
+    text-align: right;
+    padding: 8px 0;
+  }
 
-    .ant-table-tbody > tr > td:nth-child(odd) {
-        font-weight: bold; /* Highlight odd columns */
-    }
+  .ant-table-tbody > tr > td:nth-child(odd) {
+    font-weight: bold; /* Highlight odd columns */
+  }
 
-    /* Hide certain columns for smaller screens */
-    .ant-table-column-status,
-    .ant-table-column-phoneNumber {
-        display: none; /* Hide these columns on tablets and mobile */
-    }
+  /* Hide certain columns for smaller screens */
+  .ant-table-column-status,
+  .ant-table-column-phoneNumber {
+    display: none; /* Hide these columns on tablets and mobile */
+  }
 
-    /* Style for action buttons (Dropdown) */
-    .ant-dropdown-trigger {
-        padding: 5px;
-    }
+  /* Style for action buttons (Dropdown) */
+  .ant-dropdown-trigger {
+    padding: 5px;
+  }
 
-    /* Adjust the checkbox size for mobile and tablet screens */
-    .ant-checkbox-wrapper {
-        width: 24px;
-        height: 24px;
-    }
+  /* Adjust the checkbox size for mobile and tablet screens */
+  .ant-checkbox-wrapper {
+    width: 24px;
+    height: 24px;
+  }
 
-    .ant-checkbox-inner {
-        width: 18px;
-        height: 18px;
-    }
+  .ant-checkbox-inner {
+    width: 18px;
+    height: 18px;
+  }
 }
 
 /* For mobile screens (up to 768px) */
 @media (max-width: 768px) {
-    .ant-table-thead > tr > th,
-    .ant-table-tbody > tr > td {
-        font-size: 12px; /* Smaller font size for mobile */
-        padding: 8px; /* Adjust padding for mobile */
-    }
+  .ant-table-thead > tr > th,
+  .ant-table-tbody > tr > td {
+    font-size: 12px; /* Smaller font size for mobile */
+    padding: 8px; /* Adjust padding for mobile */
+  }
 
-    /* Ensure full width for the table and rows */
-    .ant-table {
-        width: 100%;
-    }
+  /* Ensure full width for the table and rows */
+  .ant-table {
+    width: 100%;
+  }
 
-    /* Style for action buttons (Dropdown) */
-    .ant-dropdown-trigger {
-        padding: 5px;
-    }
+  /* Style for action buttons (Dropdown) */
+  .ant-dropdown-trigger {
+    padding: 5px;
+  }
 
-    /* Hide more columns for mobile */
-    .ant-table-column-status,
-    .ant-table-column-phoneNumber,
-    .ant-table-column-activity {
-        display: none; /* Hide these columns on mobile */
-    }
+  /* Hide more columns for mobile */
+  .ant-table-column-status,
+  .ant-table-column-phoneNumber,
+  .ant-table-column-activity {
+    display: none; /* Hide these columns on mobile */
+  }
 
-    .ant-table-row {
-        display: block;
-        padding: 15px 0;
-        margin-bottom: 10px; /* Add margin for better separation */
-        border-bottom: 1px solid #e8e8e8;
-    }
+  .ant-table-row {
+    display: block;
+    padding: 15px 0;
+    margin-bottom: 10px; /* Add margin for better separation */
+    border-bottom: 1px solid #e8e8e8;
+  }
 
-    .ant-table-tbody > tr > td {
-        display: block;
-        width: 100%;
-        text-align: right;
-        padding: 10px 0;
-    }
+  .ant-table-tbody > tr > td {
+    display: block;
+    width: 100%;
+    text-align: right;
+    padding: 10px 0;
+  }
 
-    .ant-table-tbody > tr > td:nth-child(odd) {
-        font-weight: bold; /* Highlight odd columns */
-    }
+  .ant-table-tbody > tr > td:nth-child(odd) {
+    font-weight: bold; /* Highlight odd columns */
+  }
 
-    .ant-checkbox-wrapper {
-        width: 30px;
-        height: 30px;
-    }
+  .ant-checkbox-wrapper {
+    width: 30px;
+    height: 30px;
+  }
 
-    .ant-checkbox-inner {
-        width: 24px;
-        height: 24px;
-    }
+  .ant-checkbox-inner {
+    width: 24px;
+    height: 24px;
+  }
 }
 
 /* For extra large screens */
 @media (min-width: 1200px) {
-    .ant-table-thead > tr > th {
-        font-size: 16px; /* Increase font size for larger screens */
-        padding: 16px;
-    }
+  .ant-table-thead > tr > th {
+    font-size: 16px; /* Increase font size for larger screens */
+    padding: 16px;
+  }
 
-    .ant-table-tbody > tr > td {
-        font-size: 16px; /* Increase font size for larger screens */
-        padding: 16px;
-    }
+  .ant-table-tbody > tr > td {
+    font-size: 16px; /* Increase font size for larger screens */
+    padding: 16px;
+  }
 }
 
 /* Table header styles */
 .ant-table-thead > tr > th {
-    font-weight: 300 !important;
-    color: rgba(82, 92, 118, 1) !important;
+  font-weight: 300 !important;
+  color: rgba(82, 92, 118, 1) !important;
 }
 
 /* User name color in Users column */
 .ant-table-tbody > tr > td {
-    font-weight: 300 !important;
+  font-weight: 300 !important;
 
-    color: rgba(82, 92, 118, 1);
+  color: rgba(82, 92, 118, 1);
 }
 
 /* User name specific style in the Users column */
 .ant-table-tbody > tr > td:first-child + td span {
-    color: #000;
+  color: #000;
 }
 /* Remove borders between columns */
 .ant-table-tbody > tr > td {
-    border: none;
+  border: none;
 }
 
 /* Add border only below the table header */
 .ant-table-thead > tr > th {
-    border-bottom: 1px solid rgba(82, 92, 118, 1);
+  border-bottom: 1px solid rgba(82, 92, 118, 1);
 }
 
 /* Optional: Remove top border of the table */
 .ant-table {
-    border-top: none;
+  border-top: none;
 }
 
 .ant-table-wrapper .ant-table-tbody > tr > td {
-    transition:
-        background 0.2s,
-        border-color 0.2s;
-    border-bottom: none;
+  transition:
+    background 0.2s,
+    border-color 0.2s;
+  border-bottom: none;
 }
 /* Remove borders between table headers */
 .ant-table-thead > tr > th {
-    border-right: none; /* Removes the right border between header cells */
-    margin: 50px auto !important;
+  border-right: none; /* Removes the right border between header cells */
+  margin: 50px auto !important;
 }
 
 /* Optional: Remove left border of the first header cell */
 .ant-table-thead > tr > th:first-child {
-    border-left: none;
+  border-left: none;
 }
 
 /* Ensure a clean border at the bottom of the header row */
 .ant-table-thead > tr > th {
-    border-bottom: 1px solid rgba(82, 92, 118, 1);
+  border-bottom: 1px solid rgba(82, 92, 118, 1);
 }
 
 :where(.css-dev-only-do-not-override-qnu6hi).ant-table-wrapper
-    .ant-table-thead
-    > tr
-    > th:not(:last-child):not(.ant-table-selection-column):not(
-        .ant-table-row-expand-icon-cell
-    ):not([colspan])::before,
+  .ant-table-thead
+  > tr
+  > th:not(:last-child):not(.ant-table-selection-column):not(
+    .ant-table-row-expand-icon-cell
+  ):not([colspan])::before,
 :where(.css-dev-only-do-not-override-qnu6hi).ant-table-wrapper
-    .ant-table-thead
-    > tr
-    > td:not(:last-child):not(.ant-table-selection-column):not(
-        .ant-table-row-expand-icon-cell
-    ):not([colspan])::before {
-    position: absolute;
-    top: 50%;
-    inset-inline-end: 0;
-    width: 1px;
-    height: 1.6em;
-    background-color: transparent !important;
-    transform: translateY(-50%);
-    transition: background-color 0.2s;
-    content: "";
+  .ant-table-thead
+  > tr
+  > td:not(:last-child):not(.ant-table-selection-column):not(
+    .ant-table-row-expand-icon-cell
+  ):not([colspan])::before {
+  position: absolute;
+  top: 50%;
+  inset-inline-end: 0;
+  width: 1px;
+  height: 1.6em;
+  background-color: transparent !important;
+  transform: translateY(-50%);
+  transition: background-color 0.2s;
+  content: "";
 }
 
 :where(.css-dev-only-do-not-override-qnu6hi).ant-table-wrapper
-    .ant-table-thead
-    > tr
-    > th {
-    padding-top: 40px !important; /* Yuxarı məsafə */
-    padding-bottom: 40px !important; /* Aşağı məsafə */
-    background-color: #fff !important;
+  .ant-table-thead
+  > tr
+  > th {
+  padding-top: 40px !important; /* Yuxarı məsafə */
+  padding-bottom: 40px !important; /* Aşağı məsafə */
+  background-color: #fff !important;
 }
