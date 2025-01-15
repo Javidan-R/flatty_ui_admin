@@ -14,21 +14,20 @@ const Sidebar = () => {
 
   const menu: MenuProps["items"] = menuItems.map((item, index) => {
     return {
-      key: index,
-      icon: createElement(item.icon),
+      key: index.toString(), // Convert to string for key uniqueness
+      icon: createElement(item.icon.type, item.icon.props), // Correct usage of createElement
       label: item.subItems ? item.name : <Link to={item.url}>{item.name}</Link>,
       children: item.subItems
         ? item.subItems.map((si, i) => {
             return {
-              key: (i + 10) * (index + 20) + 10,
-              icon: createElement(si.icon),
+              key: `${index}-${i}`, // Unique key for nested items
+              icon: createElement(si.icon.type, si.icon.props),
               label: <Link to={si.url}>{si.name}</Link>,
             };
           })
-        : null,
+        : undefined, // Use undefined instead of null for clarity with TypeScript
     };
   });
-
   useEffect(() => {
     menuItems.forEach((item, index) => {
       item.url === currentLocation ? setPathId(index) : null;

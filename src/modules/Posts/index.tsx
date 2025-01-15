@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import PostTable from "@/components/PostTable";
 import FilterModal from "@/components/FilterModal"; // Import the FilterModal
-import { Input, Button, Space, Pagination } from "antd";
+import { Input, Button, Pagination } from "antd";
 import { useQuery } from "@tanstack/react-query";
 import postService from "@/services/posts.service";
 import styles from "./PostPage.module.css";
@@ -22,6 +22,7 @@ const PostPage: React.FC = () => {
     queryKey: ["posts", searchId, currentPage, filters],
     queryFn: () => postService.getPosts(searchId, currentPage, 10, filters),
   });
+
   const showFilterModal = () => {
     setIsFilterModalVisible(true);
   };

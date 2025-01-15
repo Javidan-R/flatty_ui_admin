@@ -1,6 +1,4 @@
-// src/components/UserTable.tsx
-// src/components/UserTable.tsx
-import React, { useState } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import {
   Alert,
   Empty,
@@ -9,177 +7,244 @@ import {
   Table,
   Avatar,
   Dropdown,
-  Menu,
   Checkbox,
+  Modal,
+  Form,
+  Input,
+  Select,
 } from "antd";
-import { useNavigate } from "react-router-dom";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AgentsResponse } from "@/types/agents/AgentsResponse";
 import { MoreOutlined } from "@ant-design/icons";
-import userService from "@/services/agents.service";
-import "../styles/UserTable.css";
+import agentService from "@/services/agents.service";
+import "../styles/AgentTable.css";
+import { CheckboxChangeEvent } from "antd/es/checkbox";
 
-interface UserTableProps {
+interface AgentTableProps {
   searchText: string;
   selectedCompany: string | null;
   currentPage: number;
-  setTotalUsers: React.Dispatch<React.SetStateAction<number>>;
+  setTotalAgents: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const UserTable: React.FC<UserTableProps> = ({
+const AgentTable: React.FC<AgentTableProps> = ({
   searchText,
   selectedCompany,
   currentPage,
-  setTotalUsers,
+  setTotalAgents,
 }) => {
-  const navigate = useNavigate();
   const [messageApi, contextHolder] = message.useMessage();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+  const [currentEditingAgent, setCurrentEditingAgent] =
+    useState<AgentsResponse | null>(null);
+  const [form] = Form.useForm();
+  const queryClient = useQueryClient();
 
-  const fetchUsers = async () => {
-    const { users, total } = await userService.getUsers(
+  const fetchAgents = useCallback(async () => {
+    const { agents, total } = await agentService.getAgents(
       searchText,
       selectedCompany || "",
       currentPage,
       10
     );
-    setTotalUsers(total);
-    return users;
-  };
+    setTotalAgents(total);
+    return agents;
+  }, [searchText, selectedCompany, currentPage, setTotalAgents]);
 
   const {
     isError,
     error,
-    data: users = [],
+    data: agents = [],
   } = useQuery({
-    queryKey: ["users", searchText, selectedCompany, currentPage],
-    queryFn: fetchUsers,
+    queryKey: ["agents", searchText, selectedCompany, currentPage],
+    queryFn: fetchAgents,
   });
 
-  const success = () => {
+  const success = useCallback(() => {
     messageApi.open({
       type: "success",
-      content: "User deleted successfully",
+      content: currentEditingAgent
+        ? "Agent updated successfully"
+        : "Agent deleted successfully",
     });
-    setTimeout(messageApi.destroy, 2000);
-  };
+    setTimeout(() => messageApi.destroy(), 2000);
+    setIsEditModalVisible(false);
+    queryClient.invalidateQueries({ queryKey: ["agents"] });
+  }, [messageApi, currentEditingAgent, queryClient]);
 
-  const deleteUserMutation = useMutation({
-    mutationFn: (id: number) => userService.deleteUser(id),
+  const deleteAgentMutation = useMutation({
+    mutationFn: (id: number) => agentService.deleteAgent(id),
     onSuccess: success,
     onError: (error: any) => {
       messageApi.open({
         type: "error",
-        content: `Error deleting user: ${error.message || "Something went wrong!"}`,
+        content: `Error deleting agent: ${error.message || "Something went wrong!"}`,
       });
     },
   });
 
-  const deleteUser = (id: number) => {
-    deleteUserMutation.mutate(id);
+  const updateAgentMutation = useMutation({
+    mutationFn: (params: {
+      id: number;
+      updatedData: Partial<AgentsResponse>;
+    }) => agentService.updateAgent(params.id, params.updatedData),
+    onSuccess: success,
+    onError: (error: any) => {
+      messageApi.open({
+        type: "error",
+        content: `Error updating agent: ${error.message || "Something went wrong!"}`,
+      });
+    },
+  });
+
+  const showEditModal = (agent: AgentsResponse) => {
+    setCurrentEditingAgent(agent);
+    form.setFieldsValue({
+      name: agent.name,
+      surname: agent.surname,
+      status: agent.status,
+      phoneNumber: agent.phoneNumber,
+      activePosts: agent.activePosts,
+      company: agent.company,
+    }); // Set initial values for the form
+    setIsEditModalVisible(true);
   };
 
-  const handleCheckboxChange = (e: any, userId: number) => {
-    setSelectedRowKeys((prevSelectedKeys) =>
-      e.target.checked
-        ? [...prevSelectedKeys, userId]
-        : prevSelectedKeys.filter((key) => key !== userId)
-    );
+  const handleEditModalOk = () => {
+    form
+      .validateFields()
+      .then((values) => {
+        if (currentEditingAgent) {
+          updateAgentMutation.mutate({
+            id: currentEditingAgent.id,
+            updatedData: values,
+          });
+        }
+      })
+      .catch((errorInfo) => {
+        console.log("Validation failed:", errorInfo);
+      });
   };
 
-  const handleSelectAllChange = (e: any) => {
-    if (e.target.checked) {
-      setSelectedRowKeys(users.map((user) => user.id));
-    } else {
-      setSelectedRowKeys([]);
-    }
+  const handleEditModalCancel = () => {
+    setIsEditModalVisible(false);
   };
 
-  const rowClassName = (record: AgentsResponse) =>
-    selectedRowKeys.includes(record.id) ? "selected-row" : "";
+  const handleCheckboxChange = useCallback(
+    (e: CheckboxChangeEvent, agentId: number) => {
+      setSelectedRowKeys((prev) =>
+        e.target.checked
+          ? [...prev, agentId]
+          : prev.filter((id) => id !== agentId)
+      );
+    },
+    []
+  );
 
-  const columns = [
-    {
-      title: (
-        <Checkbox
-          checked={selectedRowKeys.length === users.length}
-          indeterminate={
-            selectedRowKeys.length > 0 && selectedRowKeys.length < users.length
-          }
-          onChange={handleSelectAllChange}
-        />
-      ),
-      key: "checkbox",
-      render: (_: any, record: AgentsResponse) => (
-        <Checkbox
-          checked={selectedRowKeys.includes(record.id)}
-          onChange={(e) => handleCheckboxChange(e, record.id)}
-        />
-      ),
+  const handleSelectAllChange = useCallback(
+    (e: CheckboxChangeEvent) => {
+      setSelectedRowKeys(
+        e.target.checked ? agents.map((agent) => agent.id) : []
+      );
     },
-    {
-      title: "Users",
-      key: "fullName",
-      render: (_: any, record: AgentsResponse) => (
-        <Space>
-          <Avatar src={record.photo} size={40} />
-          <span>
-            {record.name} {record.surname}
-          </span>
-        </Space>
-      ),
-    },
-    {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
-    },
-    {
-      title: "Phone Number",
-      dataIndex: "phoneNumber",
-      key: "phoneNumber",
-    },
-    {
-      title: "Active Posts",
-      dataIndex: "activePosts",
-      key: "activePosts",
-    },
-    {
-      title: "Company",
-      dataIndex: "company",
-      key: "company",
-    },
-    {
-      title: "Actions",
-      key: "actions",
-      render: (_: any, record: AgentsResponse) => (
-        <Dropdown
-          overlay={
-            <Menu>
-              <Menu.Item
-                key="1"
-                onClick={() => navigate(`/admin/users/edit/${record.id}`)}
-              >
-                Edit
-              </Menu.Item>
-              <Menu.Item key="2" danger onClick={() => deleteUser(record.id)}>
-                Delete
-              </Menu.Item>
-            </Menu>
-          }
-          trigger={["click"]}
-        >
-          <MoreOutlined
-            style={{
-              fontSize: "20px",
-              cursor: "pointer",
-              color: "rgba(0, 0, 0, 0.65)",
-            }}
+    [agents]
+  );
+
+  const rowClassName = useCallback(
+    (record: AgentsResponse) =>
+      selectedRowKeys.includes(record.id) ? "selected-row" : "",
+    [selectedRowKeys]
+  );
+
+  const columns = useMemo(
+    () => [
+      {
+        title: (
+          <Checkbox
+            checked={selectedRowKeys.length === agents.length}
+            indeterminate={
+              selectedRowKeys.length > 0 &&
+              selectedRowKeys.length < agents.length
+            }
+            onChange={handleSelectAllChange}
           />
-        </Dropdown>
-      ),
-    },
-  ];
+        ),
+        key: "checkbox",
+        render: (record: AgentsResponse) => (
+          <Checkbox
+            checked={selectedRowKeys.includes(record.id)}
+            onChange={(e) => handleCheckboxChange(e, record.id)}
+          />
+        ),
+      },
+      {
+        title: "Agents",
+        key: "fullName",
+        render: (_: any, record: AgentsResponse) => (
+          <Space>
+            <Avatar src={record.photo} size={40} />
+            <span>
+              {record.name} {record.surname}
+            </span>
+          </Space>
+        ),
+      },
+      {
+        title: "Status",
+        dataIndex: "status",
+        key: "status",
+      },
+      {
+        title: "Phone Number",
+        dataIndex: "phoneNumber",
+        key: "phoneNumber",
+      },
+      {
+        title: "Active Posts",
+        dataIndex: "activePosts",
+        key: "activePosts",
+      },
+      {
+        title: "Company",
+        dataIndex: "company",
+        key: "company",
+      },
+      {
+        title: "Actions",
+        key: "actions",
+        render: (_: any, record: AgentsResponse) => (
+          <Dropdown
+            menu={{
+              items: [
+                {
+                  key: "1",
+                  label: "Edit",
+                  onClick: () => showEditModal(record),
+                },
+                {
+                  key: "2",
+                  label: "Delete",
+                  danger: true,
+                  onClick: () => deleteAgentMutation.mutate(record.id),
+                },
+              ],
+            }}
+            trigger={["click"]}
+          >
+            <MoreOutlined
+              style={{
+                fontSize: "20px",
+                cursor: "pointer",
+                color: "rgba(0, 0, 0, 0.65)",
+              }}
+            />
+          </Dropdown>
+        ),
+      },
+    ],
+    [agents, selectedRowKeys, handleCheckboxChange, handleSelectAllChange]
+  );
 
   return (
     <>
@@ -192,11 +257,10 @@ const UserTable: React.FC<UserTableProps> = ({
           style={{ marginBottom: "20px" }}
         />
       )}
-
-      {users.length ? (
+      {agents.length ? (
         <Table
           columns={columns}
-          dataSource={users}
+          dataSource={agents}
           rowKey={(record) => record.id.toString()}
           rowClassName={rowClassName}
           pagination={false}
@@ -204,10 +268,75 @@ const UserTable: React.FC<UserTableProps> = ({
           style={{ marginBottom: "20px" }}
         />
       ) : (
-        <Empty description="No users found" />
+        <Empty description="No agents found" />
       )}
+
+      <Modal
+        title="Edit Agent"
+        visible={isEditModalVisible}
+        onOk={handleEditModalOk}
+        onCancel={handleEditModalCancel}
+        okText="Save"
+        cancelText="Cancel"
+      >
+        <Form form={form} layout="vertical" name="edit_agent_form">
+          <Form.Item
+            name="name"
+            label="Name"
+            rules={[{ required: true, message: "Please input the name!" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="surname"
+            label="Surname"
+            rules={[{ required: true, message: "Please input the surname!" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="status"
+            label="Status"
+            rules={[{ required: true, message: "Please select a status!" }]}
+          >
+            <Select>
+              <Select.Option value="Active">Active</Select.Option>
+              <Select.Option value="Inactive">Inactive</Select.Option>
+            </Select>
+          </Form.Item>
+          <Form.Item
+            name="phoneNumber"
+            label="Phone Number"
+            rules={[{ required: true, message: "Please input phone number!" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="activePosts"
+            label="Active Posts"
+            rules={[{ required: true, message: "Please input active posts!" }]}
+          >
+            <Input type="number" />
+          </Form.Item>
+          <Form.Item
+            name="company"
+            label="Company"
+            rules={[{ required: true, message: "Please select a company!" }]}
+          >
+            <Select>
+              {Array.from(new Set(agents.map((a) => a.company))).map(
+                (company) => (
+                  <Select.Option key={company} value={company}>
+                    {company}
+                  </Select.Option>
+                )
+              )}
+            </Select>
+          </Form.Item>
+        </Form>
+      </Modal>
     </>
   );
 };
 
-export default UserTable;
+export default AgentTable;

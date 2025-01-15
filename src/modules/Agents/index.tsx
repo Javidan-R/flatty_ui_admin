@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
-import UserTable from "@/components/AgentTable";
-import { Input, Select, Button, Pagination, ConfigProvider } from "antd";
+import { Input, Select, Button, Pagination, ConfigProvider, Space } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import styles from "./AgentsPage.module.css"; // Import CSS module
 import agentService from "@/services/agents.service";
+import AgentTable from "@/components/AgentTable";
 
 const AgentsPage: React.FC = () => {
   const [searchText, setSearchText] = useState("");
   const [selectedCompany, setSelectedCompany] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalUsers, setTotalUsers] = useState(0);
+  const [totalAgents, setTotalAgents] = useState(0);
   const [companies, setCompanies] = useState<string[]>([]);
 
   useEffect(() => {
@@ -24,14 +24,14 @@ const AgentsPage: React.FC = () => {
 
   const onPageChange = (page: number) => setCurrentPage(page);
 
-  const totalPages = Math.ceil(totalUsers / 10);
+  const totalPages = Math.ceil(totalAgents / 10);
   const showTotal = (total: number) => `${total} results`;
 
   return (
     <ConfigProvider>
       <div className={styles.userManagementContainer}>
         <div className={styles.searchAndSelect}>
-          <Input.Group compact>
+          <Space.Compact>
             <Input
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
@@ -39,33 +39,35 @@ const AgentsPage: React.FC = () => {
               style={{
                 width: "400px",
                 height: "40px",
-                borderRadius: "6px 0 0 6px",
+                borderRadius: "6px",
                 border: "1px solid #d9d9d9",
                 padding: "0 12px",
                 fontSize: "14px",
               }}
             />
             <Button
-              type="primary"
               icon={<SearchOutlined />}
               onClick={handleSearch}
               style={{
-                height: "40px",
-                width: "48px",
+                height: "40px", // Match the height of the Input for a compact look
+                width: "auto", // Let width adjust to content
                 borderRadius: "0 6px 6px 0",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                padding: "0",
+                padding: "0 12px", // Adjust padding for better appearance
+                position: "relative", // Changed from absolute to relative
+                border: "1px solid #d9d9d9",
+                borderLeft: "none", // Remove left border to connect with Input
               }}
             />
-          </Input.Group>
+          </Space.Compact>
           <Select
             style={{
               width: "240px",
               height: "40px",
               borderRadius: "6px",
-              backgroundColor: "red",
+              backgroundColor: "#aaaaaa",
               fontSize: "14px",
               fontWeight: 600,
             }}
@@ -76,14 +78,7 @@ const AgentsPage: React.FC = () => {
             dropdownStyle={{
               borderRadius: "6px",
               overflow: "hidden",
-              backgroundColor: "red",
-
-
-            }}
-            optionStyle={{
-              fontSize: "14px",
-              padding: "8px 12px",
-              backgroundColor: "red",
+              backgroundColor: "#aaaaaa",
             }}
           >
             {companies.map((company) => (
@@ -93,11 +88,11 @@ const AgentsPage: React.FC = () => {
             ))}
           </Select>
         </div>
-        <UserTable
+        <AgentTable
           searchText={searchText}
           selectedCompany={selectedCompany}
           currentPage={currentPage}
-          setTotalUsers={setTotalUsers}
+          setTotalAgents={setTotalAgents}
         />
         <div
           style={{
@@ -109,7 +104,7 @@ const AgentsPage: React.FC = () => {
           <Pagination
             current={currentPage}
             onChange={onPageChange}
-            total={totalUsers}
+            total={totalAgents}
             pageSize={10}
             showSizeChanger={false}
             showTotal={showTotal}

@@ -1,7 +1,7 @@
 // src/services/users.service.ts
 import { AgentsResponse } from "@/types/agents/AgentsResponse";
 
-let mockUsers: AgentsResponse[] = [
+let mockAgents: AgentsResponse[] = [
   {
     id: 1,
     photo: "https://randomuser.me/api/portraits/men/1.jpg",
@@ -83,68 +83,70 @@ let mockUsers: AgentsResponse[] = [
     company: "Health Corp",
   },
 ];
-
 export default {
-  getUsers: (
+  getAgents: (
     searchText = "",
     company = "",
     page = 1,
     pageSize = 10
-  ): Promise<{ users: AgentsResponse[]; total: number }> => {
+  ): Promise<{ agents: AgentsResponse[]; total: number }> => {
     return new Promise((resolve) => {
       setTimeout(() => {
-        const filteredUsers = mockUsers.filter(
-          (user) =>
+        const filteredAgents = mockAgents.filter(
+          (agent) =>
             (!searchText ||
-              `${user.name} ${user.surname}`
+              `${agent.name} ${agent.surname}`
                 .toLowerCase()
                 .includes(searchText.toLowerCase())) &&
-            (!company || user.company === company)
+            (!company || agent.company === company)
         );
-        const total = filteredUsers.length;
-        const paginatedUsers = filteredUsers.slice(
+        const total = filteredAgents.length;
+        const paginatedAgents = filteredAgents.slice(
           (page - 1) * pageSize,
           page * pageSize
         );
-        resolve({ users: paginatedUsers, total });
-      }, 500); // Simulate API delay
+        resolve({ agents: paginatedAgents, total });
+      }, 500);
     });
   },
   getCompanies: (): Promise<string[]> => {
     return new Promise((resolve) => {
       setTimeout(() => {
         const companies = Array.from(
-          new Set(mockUsers.map((user) => user.company))
+          new Set(mockAgents.map((agent) => agent.company))
         );
         resolve(companies);
-      }, 200); // Simulate API delay
+      }, 200);
     });
   },
-  deleteUser: (id: number): Promise<void> => {
+  deleteAgent: (id: number): Promise<void> => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        const userIndex = mockUsers.findIndex((user) => user.id === id);
-        if (userIndex === -1) {
-          reject(new Error("User not found"));
+        const agentIndex = mockAgents.findIndex((agent) => agent.id === id);
+        if (agentIndex === -1) {
+          reject(new Error("Agent not found"));
         } else {
-          mockUsers = mockUsers.filter((user) => user.id !== id);
+          mockAgents = mockAgents.filter((agent) => agent.id !== id);
           resolve();
         }
       }, 500);
     });
   },
-  updateUser: (
+  updateAgent: (
     id: number,
     updatedData: Partial<AgentsResponse>
   ): Promise<AgentsResponse> => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        const userIndex = mockUsers.findIndex((user) => user.id === id);
-        if (userIndex === -1) {
-          reject(new Error("User not found"));
+        const agentIndex = mockAgents.findIndex((agent) => agent.id === id);
+        if (agentIndex === -1) {
+          reject(new Error("Agent not found"));
         } else {
-          mockUsers[userIndex] = { ...mockUsers[userIndex], ...updatedData };
-          resolve(mockUsers[userIndex]);
+          mockAgents[agentIndex] = {
+            ...mockAgents[agentIndex],
+            ...updatedData,
+          };
+          resolve(mockAgents[agentIndex]);
         }
       }, 500);
     });

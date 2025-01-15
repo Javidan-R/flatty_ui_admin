@@ -19,13 +19,13 @@ import {
   PlusCircleOutlined,
 } from "@ant-design/icons";
 
-interface FilterModalProps {
+interface UpdateİnfoProps {
   visible: boolean;
   onSave: (filters: any) => void;
   onCancel: () => void;
 }
 
-const FilterModal: React.FC<FilterModalProps> = ({
+const Updateİnfo: React.FC<UpdateİnfoProps> = ({
   visible,
   onSave,
   onCancel,
@@ -81,7 +81,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
 
   const uploadProps: UploadProps = {
     customRequest: (options: any) => {
-      const { onSuccess } = options;
+      const { file, onSuccess } = options;
       setTimeout(() => {
         if (onSuccess) onSuccess("ok");
       }, 0);
@@ -442,4 +442,4 @@ const FilterModal: React.FC<FilterModalProps> = ({
   );
 };
 
-export default FilterModal;
+export default Updateİnfo;

@@ -1,89 +1,43 @@
+import React from "react";
+import { SignOut } from "../assets/icons/SignOut";
+import { HouseLine } from "../assets/icons/HouseLine";
+import { Users } from "../assets/icons/Users";
+import { Settings } from "../assets/icons/Settings";
 import { Menu } from "../types/Menu";
-import {
-  SettingOutlined,
-  LogoutOutlined,
-  UsergroupAddOutlined,
-} from "@ant-design/icons";
 
 const menuItems: Menu[] = [
-  //   {
-  //     name: "Home",
-  //     icon: DashboardOutlined,
-  //     url: "/",
-  //   },
   {
     name: "Agents",
-    icon: UsergroupAddOutlined,
+    icon: React.createElement(Users, {
+      title: "Users icon",
+      "aria-label": "Users",
+    }),
     url: "/agents",
   },
   {
     name: "Posts",
-    icon: SettingOutlined,
+    icon: React.createElement(HouseLine, {
+      title: "Posts icon",
+      "aria-label": "Posts",
+    }),
     url: "/posts",
   },
-  //   {
-  //     name: "Category",
-  //     icon: AppstoreOutlined,
-  //     url: "/category",
-  //   },
-  //   {
-  //     name: "Department",
-  //     icon: TeamOutlined,
-  //     url: "/department",
-  //   },
-  //   {
-  //     name: "Analytics",
-  //     icon: BarChartOutlined,
-  //     url: "/analytics",
-  //   },
-  // {
-  //     name: "Payments",
-  //     icon: WalletOutlined,
-  //     url: "/payment",
-  // },
-
-  // {
-  //     name: "Products",
-  //     icon: ShoppingCartOutlined,
-  //     url: "/product",
-  // },
-  // {
-  //     name: "Orders",
-  //     icon: FileTextOutlined,
-  //     url: "/order",
-  // },
   {
     name: "Settings",
-    icon: SettingOutlined,
+    icon: React.createElement(Settings, {
+      title: "Settings icon",
+      "aria-label": "Settings",
+    }),
     url: "/settings",
   },
   {
-    name: "Sing out",
-    icon: LogoutOutlined,
+    name: "Sign out",
+    icon: React.createElement(SignOut, {
+      title: "Sign out icon",
+      "aria-label": "Sign out",
+    }),
     url: "/logout",
   },
-
-  // {
-  //     name: "Support",
-  //     icon: CustomerServiceOutlined,
-  //     url: "/support",
-  // },
-  // {
-  //     name: "Discounts",
-  //     icon: TagsOutlined,
-  //     url: "/discounts",
-  // },
-
-  // {
-  //     name: "Gifts",
-  //     icon: GiftOutlined,
-  //     url: "/gifts",
-  // },
-  // {
-  //     name: "Vendor",
-  //     icon: ShopOutlined,
-  //     url: "/vendor",
-  // },
 ];
 
 export default menuItems;
