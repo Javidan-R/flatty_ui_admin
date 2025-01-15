@@ -1,5 +1,3 @@
-import React from "react";
-
 export const ArrowRight = ({
   size = "24",
   className = "",

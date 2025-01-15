@@ -1,6 +1,14 @@
-import React from "react";
+import { FC } from "react";
 
-export const ArrowLeft = ({ color = "black", size = "24", className = "" }) => {
+interface ArrowLeftProps {
+  color: string;
+  size: string;
+  className?: string;
+}
+export const ArrowLeft: FC<ArrowLeftProps> = ({
+  color = "black",
+  size = "24",
+}) => {
   return (
     <svg
       width={size}

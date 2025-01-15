@@ -1,6 +1,9 @@
-import React from "react";
+import { FC } from "react";
 
-export const Euro = ({ size }) => {
+interface EuroProps {
+  size: string;
+}
+export const Euro: FC<EuroProps> = ({ size }) => {
   return (
     <svg
       width={size}
