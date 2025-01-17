@@ -22,7 +22,7 @@
 
 /* Hover effect for table rows */
 .ant-table-tbody > tr:hover > td {
-  background: #e6f7ff !important;
+  background: #eeeff2 !important;
 }
 
 /* Checkbox styling */

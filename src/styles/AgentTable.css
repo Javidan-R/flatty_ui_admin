@@ -241,7 +241,10 @@
 .ant-table-thead > tr > th {
   border-bottom: 1px solid rgba(82, 92, 118, 1);
 }
-
+/* Hover effect for table rows */
+.ant-table-tbody > tr:hover > td {
+  background: #eeeff2 !important;
+}
 /* Optional: Remove top border of the table */
 .ant-table {
   border-top: none;

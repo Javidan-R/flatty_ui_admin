@@ -1,19 +1,21 @@
 // src/pages/PostPage.tsx
 import React, { useState, useEffect } from "react";
 import PostTable from "@/components/PostTable";
-import FilterModal from "@/components/FilterModal"; // Import the FilterModal
+import FilterModal from "@/components/FilterModal";
 import { Input, Button, Pagination } from "antd";
 import { useQuery } from "@tanstack/react-query";
 import postService from "@/services/posts.service";
 import styles from "./PostPage.module.css";
 import { PostResponse } from "@/types/posts/PostResponse";
+import { Search } from "@/assets/icons/Search";
+import { FilterButton } from "@/assets/icons/FilterButton";
 
 const PostPage: React.FC = () => {
   const [searchId, setSearchId] = useState<number | undefined>(undefined);
   const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPosts, setTotalPosts] = useState(0);
-  const [filters, setFilters] = useState<any>({}); // State for storing filter values
+  const [filters, setFilters] = useState<any>({});
 
   const { data: postsData = { posts: [], total: 0 }, isLoading } = useQuery<{
     posts: PostResponse[];
@@ -47,7 +49,9 @@ const PostPage: React.FC = () => {
   };
 
   useEffect(() => {
-    setTotalPosts(postsData.total);
+    if (postsData) {
+      setTotalPosts(postsData.total);
+    }
   }, [postsData]);
 
   const totalPages = Math.ceil(totalPosts / 10);
@@ -59,13 +63,24 @@ const PostPage: React.FC = () => {
         <h1>Post Management</h1>
       </div>
       <div className={styles.searchAndFilter}>
-        <Input
+        <Input.Search
+          className={styles.searchInput} // Add a custom class
           type="number"
           placeholder="Search by ID"
-          onChange={(e) => handleSearch(e.target.value)}
-          style={{ width: "200px" }}
+          enterButton={<Button icon={<Search />} />}
+          onSearch={handleSearch}
+          style={{
+            width: "400px",
+            height: "45px", // Adjust height
+            padding: "10px auto",
+          }}
         />
-        <Button onClick={showFilterModal} className={styles.filterButton}>
+
+        <Button
+          onClick={showFilterModal}
+          icon={<FilterButton />}
+          className={styles.filterButton}
+        >
           Filter
         </Button>
       </div>
@@ -107,7 +122,7 @@ const PostPage: React.FC = () => {
                 </a>
               );
             }
-            return originalElement; // Return the original element for page numbers
+            return originalElement;
           }}
         />
       </div>

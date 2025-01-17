@@ -1,10 +1,63 @@
+.label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #0f1d40;
+  margin-bottom: 8px;
+}
+
+.select {
+  width: 100%;
+  height: 40px;
+  padding: 8px;
+  background-color: #eeeff2;
+  border: 1px solid #e2e4e8;
+  border-radius: 4px;
+  color: #525c76;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.button {
+  background-color: #eeeff2;
+  border: 1px solid #e2e4e8;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #525c76;
+  margin: 5px;
+}
+
+.selectedText {
+  font-weight: bold;
+  background-color: #d9d9d9 !important;
+}
+
+.numberInput {
+  width: 106px;
+  height: 40px;
+  padding: 8px;
+  border: 1px solid #e2e4e8;
+  border-radius: 4px;
+  color: #525c76;
+  font-weight: 600;
+  font-size: 12px;
+  text-align: left;
+}
+
+.toggleButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
 .uploadArea {
   border: 1px dashed #d9d9d9;
   border-radius: 4px;
   padding: 20px;
   text-align: center;
   background: #fafafa;
-  margin-bottom: 16px;
 }
 
 .uploadedFiles {
@@ -28,7 +81,6 @@
   object-fit: cover;
 }
 
-.filePreview button,
 .removeButton {
   position: absolute;
   top: 5px;
@@ -40,124 +92,11 @@
   color: red;
 }
 
-.filterContainer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
-}
-
-.label {
-  font-size: 12px;
-  font-weight: 500;
-  color: #0f1d40;
-  margin-bottom: 8px;
-}
-
-.select {
-  width: 100%;
-  max-width: 224px;
-  height: 40px;
-  padding: 8px;
-  background-color: #eeeff2;
-  border: 1px solid #e2e4e8;
-  border-radius: 4px;
-  font-weight: 600;
-  font-size: 12px;
-}
-
-.buttonGroup {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.button {
-  background-color: #eeeff2;
-  border: 1px solid #e2e4e8;
-  border-radius: 4px;
-  padding: 6px 12px;
-  font-size: 12px;
-  font-weight: 500;
-  color: #525c76;
-  margin: 5px;
-}
-.button:hover {
-  border-color: #8247e5;
-  background-color: #f5f6f7;
-}
-.numberRange {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.numberInput {
-  width: 106px;
-  height: 40px;
-  padding: 8px;
-  border: 1px solid #e2e4e8;
-  border-radius: 4px;
-  color: #525c76;
-  font-weight: 600;
-  font-size: 12px;
-}
-
-.inputWrapper {
-  position: relative;
-}
-
-.unit {
-  position: absolute;
-  top: 10px;
-  right: 8px;
-  font-size: 10px;
-  color: #888;
-}
-
-.toggleButton {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-}
-
-.photoGrid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 16px;
-}
-
-.photoContainer {
-  position: relative;
-  width: 60px;
-  height: 60px;
-}
-
-.photo {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.removePhotoButton {
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 0;
-  color: red;
-  background: rgba(255, 255, 255, 0.7);
-  border-radius: 50%;
-}
-
-.selectedText {
-  font-weight: bold;
-  background-color: #d9d9d9 !important;
-}
-
 .selectedButton {
-  padding: 8px 16px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 8px;
+  padding-bottom: 8px;
   font-size: 12px;
   font-weight: 600;
   border: 1px solid #8247e5;
@@ -171,7 +110,10 @@
 }
 
 .unselectedButton {
-  padding: 8px 16px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 8px;
+  padding-bottom: 8px;
   font-size: 12px;
   font-weight: 600;
   border: 1px solid #e2e4e8;

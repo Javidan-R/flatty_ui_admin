@@ -16,6 +16,7 @@ export { DeleteNotification } from "./DeleteNotification";
 export { DotsThreeOutline } from "./DotsThreeOutline";
 
 export { Add } from "./Add";
+export { Subtract } from "./Subtract";
 export { ToggleTrue } from "./ToggleTrue";
 export { ToggleFalse } from "./ToggleFalse";
 

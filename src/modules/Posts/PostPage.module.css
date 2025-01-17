@@ -9,11 +9,38 @@
 
 .searchAndFilter {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-start;
   align-items: center;
-  margin-bottom: 20px;
+  gap: 20px;
 }
 
 .filterButton {
   margin-left: 10px;
+  width: 96px;
+  height: 45px;
+  border-radius: 3px;
+  border: 1px solid #e2e4e8;
+  padding: 8px 16px;
+  display: flex;
+  justify-content: space-around;
+  justify-items: center;
+  align-items: center;
+}
+.searchInput input,
+button {
+  height: 45px !important; /* Set height */
+  border: 1px solid #d9d9d9; /* Optional: Default border */
+  border-radius: 4px; /* Optional: Rounded corners */
+}
+
+.searchInput input:focus,
+.searchInput button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(130, 71, 229, 0.4); /* Apply focus color */
+  border-color: #8247e5; /* Border color on focus */
+}
+
+.searchInput button {
+  height: 45px; /* Ensure button matches input height */
+  border-radius: 4px;
 }

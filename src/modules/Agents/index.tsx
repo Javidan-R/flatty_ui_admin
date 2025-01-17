@@ -67,9 +67,10 @@ const AgentsPage: React.FC = () => {
               width: "240px",
               height: "40px",
               borderRadius: "6px",
-              backgroundColor: "#aaaaaa",
+              backgroundColor: "#F5F6F7",
               fontSize: "14px",
               fontWeight: 600,
+              color: "#525C76 !important",
             }}
             placeholder="Choose Company"
             onChange={handleCompanyChange}
@@ -78,7 +79,7 @@ const AgentsPage: React.FC = () => {
             dropdownStyle={{
               borderRadius: "6px",
               overflow: "hidden",
-              backgroundColor: "#aaaaaa",
+              backgroundColor: "#F5F6F7",
             }}
           >
             {companies.map((company) => (

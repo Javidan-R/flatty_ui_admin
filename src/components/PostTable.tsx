@@ -1,4 +1,3 @@
-// src/components/PostTable.tsx
 import React, { useState, useCallback, useMemo } from "react";
 import {
   Alert,
@@ -11,13 +10,14 @@ import {
   Dropdown,
   Menu,
   Popconfirm,
-  Modal,
 } from "antd";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { PostResponse } from "@/types/posts/PostResponse";
 import postService from "@/services/posts.service";
 import { MoreOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import "../styles/PostTable.css";
+import { CheckboxChangeEvent } from "antd/es/checkbox";
+import UpdateInfo from "./Updateİnfo";
 
 interface PostTableProps {
   searchText: string;
@@ -32,11 +32,9 @@ const PostTable: React.FC<PostTableProps> = ({
 }) => {
   const [messageApi, contextHolder] = message.useMessage();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
-  const [currentPostToUpdate, setCurrentPostToUpdate] =
-    useState<PostResponse | null>(null);
+  const [updateModalVisible, setUpdateModalVisible] = useState(false);
+  const [postToUpdate, setPostToUpdate] = useState<PostResponse | null>(null);
 
-  // Fetch posts from service
   const fetchPosts = useCallback(async () => {
     const { posts, total } = await postService.getPosts(
       searchText ? parseInt(searchText, 10) : undefined,
@@ -51,17 +49,16 @@ const PostTable: React.FC<PostTableProps> = ({
     isError,
     error,
     data: posts = [],
-  } = useQuery<PostResponse[]>({
+  } = useQuery<PostResponse[], Error>({
     queryKey: ["posts", searchText, currentPage],
     queryFn: fetchPosts,
   });
 
-  // Mutation for deleting a post
-  const deletePostMutation = useMutation({
-    mutationFn: postService.deletePost,
+  const deletePostMutation = useMutation<number, Error, number>({
+    mutationFn: (id: number) => postService.deletePost(id).then(() => id), // Return the ID
     onSuccess: () => {
       messageApi.success("Post deleted successfully");
-      setTimeout(messageApi.destroy, 2000);
+      setTimeout(() => messageApi.destroy(), 2000);
     },
     onError: (error: any) => {
       messageApi.error(
@@ -70,14 +67,18 @@ const PostTable: React.FC<PostTableProps> = ({
     },
   });
 
-  // Mutation for updating a post
-  const updatePostMutation = useMutation({
-    mutationFn: (data: { id: number; updatedData: Partial<PostResponse> }) =>
-      postService.updatePost(data.id, data.updatedData),
+  // Similarly for updatePostMutation:
+  const updatePostMutation = useMutation<
+    number,
+    Error,
+    { id: number; updatedData: Partial<PostResponse> }
+  >({
+    mutationFn: ({ id, updatedData }) =>
+      postService.updatePost(id, updatedData).then(() => id),
     onSuccess: () => {
       messageApi.success("Post updated successfully");
-      setTimeout(messageApi.destroy, 2000);
-      setIsUpdateModalVisible(false); // Close modal after successful update
+      setUpdateModalVisible(false);
+      // Optionally, you might want to refetch posts here to update the table
     },
     onError: (error: any) => {
       messageApi.error(
@@ -86,53 +87,47 @@ const PostTable: React.FC<PostTableProps> = ({
     },
   });
 
-  // Handlers
   const handleSelectAll = useCallback(
-    (e: any) => {
-      setSelectedRowKeys(e.target.checked ? posts.map((post) => post.id) : []);
-    },
+    (e: CheckboxChangeEvent) =>
+      setSelectedRowKeys(e.target.checked ? posts.map((post) => post.id) : []),
     [posts]
   );
 
-  const handleCheckboxChange = useCallback((e: any) => {
+  const handleCheckboxChange = useCallback((e: CheckboxChangeEvent) => {
     const { checked, value } = e.target;
     setSelectedRowKeys((prev) =>
-      checked ? [...prev, value as number] : prev.filter((key) => key !== value)
+      checked ? [...prev, value] : prev.filter((key) => key !== value)
     );
   }, []);
 
-  const handleDelete = useCallback((id: number) => {
-    deletePostMutation.mutate(id);
-  }, []);
+  const handleDelete = useCallback(
+    (id: number) => deletePostMutation.mutate(id),
+    [deletePostMutation]
+  );
 
   const handleUpdate = useCallback(
     (id: number) => {
-      const postToUpdate = posts.find((post) => post.id === id);
-      if (postToUpdate) {
-        setCurrentPostToUpdate(postToUpdate);
-        setIsUpdateModalVisible(true);
-      }
+      const post = posts.find((p) => p.id === id);
+      setPostToUpdate(post ?? null);
+      setUpdateModalVisible(true);
     },
     [posts]
   );
 
-  const handleUpdateModalOk = useCallback(() => {
-    if (currentPostToUpdate) {
-      // Here you can gather the updated data from form fields in the modal
-      const updatedData: Partial<PostResponse> = {
-        // Example: company: 'New Company Name',
-        // Update this with actual form data
-      };
-      updatePostMutation.mutate({ id: currentPostToUpdate.id, updatedData });
-    }
-  }, [currentPostToUpdate, updatePostMutation]);
-
-  const handleUpdateModalCancel = useCallback(() => {
-    setIsUpdateModalVisible(false);
-    setCurrentPostToUpdate(null);
+  const handleModalClose = useCallback(() => {
+    setUpdateModalVisible(false);
+    setPostToUpdate(null);
   }, []);
 
-  // UI elements
+  const handleSubmitUpdate = useCallback(
+    (updatedData: Partial<PostResponse>) => {
+      if (postToUpdate) {
+        updatePostMutation.mutate({ id: postToUpdate.id, updatedData });
+      }
+    },
+    [postToUpdate, updatePostMutation]
+  );
+
   const columns = useMemo(
     () => [
       {
@@ -165,7 +160,7 @@ const PostTable: React.FC<PostTableProps> = ({
         key: "agent",
         render: (_: any, record: PostResponse) => (
           <Space>
-            <Avatar src={record.agentImage || undefined} size={40} />
+            <Avatar src={record.agentImage} size={40} />
             <span>{`${record.agentName} ${record.agentSurname}`}</span>
           </Space>
         ),
@@ -177,8 +172,10 @@ const PostTable: React.FC<PostTableProps> = ({
       },
       {
         title: "Residence Complex",
-        dataIndex: "complex",
         key: "complex",
+        render: (_: any, record: PostResponse) => (
+          <span>{record.complex?.residentialComplex || "Not specified"}</span>
+        ),
       },
       {
         title: "Post Date",
@@ -201,10 +198,8 @@ const PostTable: React.FC<PostTableProps> = ({
                 </Menu.Item>
                 <Menu.Item key="2" icon={<DeleteOutlined />} danger>
                   <Popconfirm
-                    title="Are you sure to delete this post?"
+                    title="Delete this post?"
                     onConfirm={() => handleDelete(record.id)}
-                    okText="Yes"
-                    cancelText="No"
                   >
                     Delete
                   </Popconfirm>
@@ -243,7 +238,7 @@ const PostTable: React.FC<PostTableProps> = ({
         <Table
           columns={columns}
           dataSource={posts}
-          rowKey={(record) => record.id.toString()}
+          rowKey="id"
           rowClassName={(record) =>
             selectedRowKeys.includes(record.id) ? "selected-row" : ""
           }
@@ -254,23 +249,12 @@ const PostTable: React.FC<PostTableProps> = ({
       ) : (
         <Empty description="No posts found" />
       )}
-      <Modal
-        title="Update Post"
-        visible={isUpdateModalVisible}
-        onOk={handleUpdateModalOk}
-        onCancel={handleUpdateModalCancel}
-        okText="Update"
-        cancelText="Cancel"
-      >
-        {/* Here you would add form fields for updating post data */}
-        <p>Update post form would go here.</p>
-        {currentPostToUpdate && (
-          <div>
-            <p>Current Company: {currentPostToUpdate.company}</p>
-            {/* Add more fields for other properties */}
-          </div>
-        )}
-      </Modal>
+      <UpdateInfo
+        isOpen={updateModalVisible}
+        onClose={handleModalClose}
+        onSubmit={handleSubmitUpdate}
+        initialData={postToUpdate}
+      />
     </>
   );
 };

@@ -1,11 +1,42 @@
 // src/types/posts/PostResponse.ts
+
+export interface Complex {
+  // existing properties
+  category: string;
+  residentialComplex: string;
+  description: string;
+  buildingArea: number;
+  livingArea: number;
+  objects: number;
+  year: number;
+  buildingFloors: number;
+  parkingSlot: boolean;
+  installment: boolean;
+  swimmingPool: boolean;
+  elevator: boolean;
+  latitude: number;
+  longitude: number;
+  address: string;
+  floor: number;
+  livingRoom: number;
+  bedroom: number;
+  bathroom: number;
+  balcony: number;
+
+  // new properties
+  price?: number;
+  currency?: string;
+  condition?: string;
+  renovation?: string;
+}
+
 export interface PostResponse {
   id: number;
   agentImage: string;
   agentName: string;
   agentSurname: string;
   company: string;
-  complex: string;
+  complex: Complex; // Now references our Complex type
   postDate: string;
   documents: File[];
   images: File[];
